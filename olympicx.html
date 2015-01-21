@@ -1,0 +1,99 @@
+<head>
+  <title>Olympicx</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.0/css/materialize.min.css"  media="screen,projection"/>
+
+<!--     <link rel="import" href="bower_components/paper-checkbox/paper-checkbox.html"/> -->
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.0/js/materialize.min.js"></script>
+</head>
+
+<body>
+  
+ <nav>
+    <div class="nav-wrapper">
+      <div class="col s12">
+        <a href="#!" class="brand-logo">Olympicx</a>
+        <ul class="side-nav">
+          <li><a href="sass.html"><i class="mdi-action-search"></i></a></li>
+          <li><a href="components.html"><i class="mdi-action-view-module"></i></a></li>
+          <li><a href="javascript.html"><i class="mdi-navigation-refresh"></i></a></li>
+          <li><a href="mobile.html"><i class="mdi-navigation-more-vert"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+ 
+  <div class="container">
+    <header>
+      <h1>Todo List</h1>
+      {{#if sessionName}}
+       <h2> {{sessionName}}</h2>
+      {{/if}}
+<span class="hide-completed" style="display:inline-block;">
+        <label class="label checkbox ">
+    <input type="checkbox" checked="{{hideCompletedcheck}}" />
+    <span class=""></span> Hide Completed Tasks
+</label>
+</span>
+
+        <form class="new-task">
+           <div class="input-field col s6">
+    <input id="testing" type="text" name="text"/>
+          <label for="testing">Type to add new tasks</label>
+          </div>
+  </form>
+    </header>
+    <ul>
+      {{#each tasks}}
+        {{> task}}
+      {{/each}}
+    </ul>
+  </div>
+
+<div class="floating">
+  <a class="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modal1"><i class="mdi-content-add"></i></a>
+</div>
+
+<div id="modal1" class="modal">
+    <h4>Add Team</h4>
+   <form class="new-task">
+           <div class="input-field col s12">
+    <input id="teamname" type="text" name="name" class="validate"/>
+          <label for="teamname">Team Name</label>
+          </div>
+           <div class="input-field col s3">
+            <i class="mdi-action-account-circle prefix"></i>
+    <input id="player1" type="text" name="player1" class="validate"/>
+          <label for="player1">Player 1</label>
+          </div>
+            <div class="input-field col s3">
+            <i class="mdi-action-account-circle prefix"></i>
+    <input id="player2" type="text" name="player2" class="validate"/>
+          <label for="player2">Player 2</label>
+          </div>
+  <a href="#" class="waves-effect btn-flat modal-close">Cancel</a>
+    <a href="#" class="waves-effect btn-flat">Create</a>
+      </form>
+  </div>
+</body>
+
+<template name="task">
+  <li class="{{#if checked}}checked{{/if}}">
+    <a class="delete waves-effect btn-flat">&times;</a>
+    <span class="text">{{text}}</span>
+<!--  <input type="checkbox" checked="{{checked}}" class="toggle-checked checkbox" /> -->
+{{> checkbox}}
+
+
+
+  </li>
+</template>
+
+<template name="checkbox">
+<span class="toggle-checked" style="display:inline-block;">
+        <span class="label checkbox ">
+    <input type="checkbox" checked="{{checked}}" />
+    <span class=""></span>
+</span>
+</span>
+</template>
