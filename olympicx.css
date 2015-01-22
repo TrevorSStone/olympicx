@@ -83,3 +83,12 @@ nav{
   bottom: 5%;
   right:10%;
 }
+
+.collapsible-header.myteam{
+  background-color: #42A5F5;
+color: #BBDEFB;
+}
+
+.collapsible-body .btn{
+  margin-bottom:-13px;
+}

@@ -25,57 +25,82 @@
  
   <div class="container">
     <header>
-      <h1>Todo List</h1>
-      {{#if sessionName}}
-       <h2> {{sessionName}}</h2>
-      {{/if}}
-<span class="hide-completed" style="display:inline-block;">
-        <label class="label checkbox ">
-    <input type="checkbox" checked="{{hideCompletedcheck}}" />
-    <span class=""></span> Hide Completed Tasks
-</label>
-</span>
-
-        <form class="new-task">
-           <div class="input-field col s6">
-    <input id="testing" type="text" name="text"/>
-          <label for="testing">Type to add new tasks</label>
-          </div>
-  </form>
+      {{#with sessionName}}
+       <h3> {{sessionName}}</h3>
+       {{else}}
+       <h1>Welcome</h1>
+      {{/with}}
     </header>
-    <ul>
-      {{#each tasks}}
-        {{> task}}
-      {{/each}}
-    </ul>
+    {{#with teams}}
+    {{> teamcontainer }}
+    {{/with}}
   </div>
-
+{{#unless sessionName}}
 <div class="floating">
   <a class="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modal1"><i class="mdi-content-add"></i></a>
 </div>
 
 <div id="modal1" class="modal">
     <h4>Add Team</h4>
-   <form class="new-task">
+
+   <form class="new-team">
            <div class="input-field col s12">
     <input id="teamname" type="text" name="name" class="validate"/>
           <label for="teamname">Team Name</label>
           </div>
            <div class="input-field col s3">
             <i class="mdi-action-account-circle prefix"></i>
-    <input id="player1" type="text" name="player1" class="validate"/>
-          <label for="player1">Player 1</label>
+    <input id="captain" type="text" name="captain" class="validate"/>
+          <label for="captain">Your Name</label>
           </div>
-            <div class="input-field col s3">
-            <i class="mdi-action-account-circle prefix"></i>
-    <input id="player2" type="text" name="player2" class="validate"/>
-          <label for="player2">Player 2</label>
-          </div>
+            
   <a href="#" class="waves-effect btn-flat modal-close">Cancel</a>
-    <a href="#" class="waves-effect btn-flat">Create</a>
+    <a href="#" class="waves-effect btn-flat add-team-submit">Create</a>
+    <input type="submit" style="display:none;">
       </form>
   </div>
+
+
+  {{/unless}}
 </body>
+
+
+<template name="teamcontainer">
+<ul class="collapsible">
+      {{#each .}}
+        {{> team }}
+      {{/each}}
+    </ul>
+</template>
+
+<template name="team">
+ <li>
+          <div class="collapsible-header {{myid .}}">{{teamName}}<span class="badge">{{score}}</span></div>
+          <div class="collapsible-body"><p>
+            {{player1}} &amp; 
+            {{#if player2}}
+            {{player2}}
+            {{else}}
+              {{#if sessionName}}
+                Unknown
+                {{else}}
+                <a class="waves-effect waves-light btn modal-trigger" href="#modal{{_id}}">Join</a>
+                {{> joinmodal}}
+                {{/if}}
+            {{/if}} 
+
+            {{#if admin}}
+            <div class="admin">
+             <a class="waves-effect waves-light btn red sub"><i class="mdi-content-remove"></i></a>
+            <a class="waves-effect waves-light btn add"><i class="mdi-content-add"></i></a>
+            </div>
+            {{/if}}
+
+          </p></div>
+            
+        </li>
+</template>
+
 
 <template name="task">
   <li class="{{#if checked}}checked{{/if}}">
@@ -96,4 +121,26 @@
     <span class=""></span>
 </span>
 </span>
+</template>
+
+<template name="joinmodal">
+
+<div id="modal{{_id}}" class="modal">
+    <h4>Join Team {{teamName}}</h4>
+
+   <form class="join-team">
+          
+           <div class="input-field col s3">
+            <i class="mdi-action-account-circle prefix"></i>
+    <input id="player2" type="text" name="captain" class="validate"/>
+          <label for="player2">Your Name</label>
+          <input type="hidden" name="id" value="{{_id}}" />
+          <input type="hidden" name="teamname" value="{{teamName}}" />
+          </div>
+            
+  <a href="#" class="waves-effect btn-flat modal-close">Cancel</a>
+    <a href="#" class="waves-effect btn-flat join-team-submit">Create</a>
+    <input type="submit" style="display:none;">
+      </form>
+  </div>
 </template>
